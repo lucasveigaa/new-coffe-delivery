@@ -7,7 +7,7 @@ import iconMapFullPurple from "../assets/icon-map-full-purple-header.svg";
 
 export function Header() {
   return (
-    <header className='flex justify-between content-center max-w-[1170px] mx-auto py-8'>
+    <header className='flex justify-between content-center py-8'>
       <Image src={coffeLogo} alt="Logo do Coffe Delivery" />
 
       <div className='flex gap-3'>

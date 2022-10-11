@@ -26,6 +26,10 @@ module.exports = {
         "yellow": "#DBAC2C",
         "yellow-dark": "#C47F17",
       },
+      fontFamily: {
+        'baloo2': ['Baloo 2', 'cursive'],
+        'roboto': ['Roboto', 'sans-serif'],
+      },
       boxShadow: {
         '3xl': '0px 4px 4px rgba(0, 0, 0, 0.25)'
       }

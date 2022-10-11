@@ -27,7 +27,7 @@ module.exports = {
         "yellow-dark": "#C47F17",
       },
       fontFamily: {
-        'baloo2': ['Baloo 2', 'cursive'],
+        "baloo2": ["Baloo-2", "cursive"],
         'roboto': ['Roboto', 'sans-serif'],
       },
       boxShadow: {

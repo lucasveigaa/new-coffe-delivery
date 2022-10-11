@@ -14,7 +14,7 @@ export function Header() {
 
         <div className='flex justify-center content-center bg-purple-light p-2 rounded-md text-purple-dark text-sm gap-1 shadow-3xl'>
           <Image src={iconMapFullPurple} width={22} height={22} alt="" />
-          <span>Minas Gerais, MG</span>
+          <span className='items-center flex'>Minas Gerais, MG</span>
         </div>
 
         <Image src={iconCartFullYellowDark} alt="" />

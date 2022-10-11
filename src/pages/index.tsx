@@ -1,5 +1,8 @@
 import type { NextPage } from 'next';
+
+
 import { Header } from '../components/header';
+import { ItemCart } from '../components/ItemCart';
 
 import Image from 'next/image';
 
@@ -9,8 +12,11 @@ import iconCoffeWhiteBackPurple from "../assets/coffe-white-back-purple.svg";
 import iconPackingWhiteBackGray from "../assets/packing-white-back-gray.svg";
 import timerWhiteBackYellow from "../assets/timer-white-back-yellow.svg";
 
+import { coffeItens } from '../services/products';
+
 
 const Home: NextPage = () => {
+
   return (
     <div className='max-w-[1170px] mx-auto'>
       <Header />
@@ -21,26 +27,26 @@ const Home: NextPage = () => {
           <h1 className='text-base-title text-5xl font-baloo2 font-extrabold leading-tight mb-4'>
             Encontre o café perfeito para qualquer hora do dia
           </h1>
-          <span className='text-base-subtitle text-xl font-roboto leading-tight'>
+          <span className='text-base-subtitle text-xl leading-tight'>
             Com o Coffee Delivery você recebe seu café onde estiver, a qualquer hora
           </span>
 
           <div className='mt-16 grid grid-cols-2 grid-rows-2 gap-5'>
             <div className='flex items-center gap-3'>
               <Image src={iconCartWhiteBackYellow} alt="" />
-              <span className='font-roboto text-base-text'>Compra simples e segura</span>
+              <span className='text-base-text'>Compra simples e segura</span>
             </div>
             <div className='flex items-center gap-3'>
               <Image src={iconPackingWhiteBackGray} alt="" />
-              <span className='font-roboto text-base-text'>Embalagem mantém o café intacto</span>
+              <span className='text-base-text'>Embalagem mantém o café intacto</span>
             </div>
             <div className='flex items-center gap-3'>
               <Image src={timerWhiteBackYellow} alt="" />
-              <span className='font-roboto text-base-text'>Entrega rápida e rastreada</span>
+              <span className='text-base-text'>Entrega rápida e rastreada</span>
             </div>
             <div className='flex items-center gap-3'>
               <Image src={iconCoffeWhiteBackPurple} alt="" />
-              <span className='font-roboto text-base-text'>
+              <span className='text-base-text'>
                 O café chega fresquinho até você
               </span>
             </div>
@@ -49,6 +55,15 @@ const Home: NextPage = () => {
 
         <Image src={bannerCoffeHome} alt="" />
       </div>
+
+      <div className='flex flex-wrap gap-8'>
+        {coffeItens.map((product) => {
+          return (
+            <ItemCart {...product} key={product.idProduct} />
+          )
+        })}
+      </div>
+
     </div>
   )
 }

@@ -56,7 +56,11 @@ const Home: NextPage = () => {
         <Image src={bannerCoffeHome} alt="" />
       </div>
 
-      <div className='flex flex-wrap gap-8'>
+      <strong className='font-baloo2 text-base-subtitle font-extrabold text-[32px]'>
+        Nossos cafés
+      </strong>
+
+      <div className='mt-12 flex flex-wrap gap-8'>
         {coffeItens.map((product) => {
           return (
             <ItemCart {...product} key={product.idProduct} />

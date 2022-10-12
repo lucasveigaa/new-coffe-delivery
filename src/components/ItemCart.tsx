@@ -1,11 +1,7 @@
-
 import Image from 'next/image';
 import cartWhiteBackPurpleDark from "../assets/cart-white-back-purple-dark.svg";
 
 import { Minus, Plus } from "phosphor-react";
-
-
-
 
 interface Product {
   idProduct: number;

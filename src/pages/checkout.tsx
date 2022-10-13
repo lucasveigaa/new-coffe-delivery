@@ -58,29 +58,35 @@ export default function Checkout() {
             </span>
 
             <div className="flex gap-3 mt-8">
-              <input type="text" id="credit-card" className="hidden" />
-              <label htmlFor="credit-card"
-                className="flex items-center gap-3 text-base-text text-xs p-4 bg-base-button rounded-md w-44 cursor-pointer hover:bg-base-hover"
-              >
-                <CreditCard color="#8047F8" />
-                CARTÃO DE CRÉDITO
-              </label>
+              <div>
+                <input name="payment-method" type="radio" id="credit-card" className="hidden peer" />
+                <label htmlFor="credit-card"
+                  className="flex items-center gap-3 text-base-text text-xs p-4 bg-base-button rounded-md w-44 cursor-pointer hover:bg-base-hover peer-checked:border-1 peer-checked:border-purple"
+                >
+                  <CreditCard color="#8047F8" />
+                  CARTÃO DE CRÉDITO
+                </label>
+              </div>
 
-              <input type="text" id="debit-card" className="hidden" />
-              <label htmlFor="debit-card"
-                className="flex items-center gap-3 text-base-text text-xs p-4 bg-base-button rounded-md w-44 cursor-pointer hover:bg-base-hover"
-              >
-                <Bank color="#8047F8" />
-                CARTÃO DE DÉBITO
-              </label>
+              <div>
+                <input name="payment-method" type="radio" id="debit-card" className="hidden peer" />
+                <label htmlFor="debit-card"
+                  className="flex items-center gap-3 text-base-text text-xs p-4 bg-base-button rounded-md w-44 cursor-pointer hover:bg-base-hover peer-checked:border-1 peer-checked:border-purple"
+                >
+                  <Bank color="#8047F8" />
+                  CARTÃO DE DÉBITO
+                </label>
+              </div>
 
-              <input type="text" id="cash" className="hidden" />
-              <label htmlFor="cash"
-                className="flex items-center gap-3 text-base-text text-xs p-4 bg-base-button rounded-md w-44 cursor-pointer hover:bg-base-hover"
-              >
-                <Money color="#8047F8" />
-                DINHEIRO
-              </label>
+              <div className="">
+                <input name="payment-method" type="radio" id="cash" className="hidden peer" />
+                <label htmlFor="cash"
+                  className="flex items-center gap-3 text-base-text text-xs p-4 bg-base-button rounded-md w-44 cursor-pointer hover:bg-base-hover peer-checked:border-1 peer-checked:border-purple"
+                >
+                  <Money color="#8047F8" />
+                  DINHEIRO
+                </label>
+              </div>
             </div>
 
           </div>

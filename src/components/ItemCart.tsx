@@ -17,6 +17,8 @@ export function ItemCart(product: Product) {
 
   const { descriptionProduct, imgProduct, titleProduct, typeProduct, valueProduct } = product
 
+  const newValueProduct = valueProduct.toString().replace('.', ',')
+
   return (
     <div className='flex flex-col items-center w-fit px-5 pb-5 bg-base-card rounded-tl-md rounded-br-md rounded-tr-[36px] rounded-bl-[36px]'>
       <div className='mt-[-21px] mb-3'>
@@ -39,7 +41,7 @@ export function ItemCart(product: Product) {
 
       <div className='flex mt-8'>
         <span className='text-sm text-base-text mr-6'>R$
-          <strong className='font-baloo2 font-extrabold text-2xl'> {valueProduct}</strong>
+          <strong className='font-baloo2 font-extrabold text-2xl'> {newValueProduct}0</strong>
         </span>
         <div className='bg-base-button rounded-md p-2 mr-2 flex items-center'>
           <button type='button'>{<Minus color='#8047F8' />}</button>

@@ -1,5 +1,6 @@
 
 import Image from 'next/image';
+import Link from 'next/link';
 
 import coffeLogo from '../assets/coffe-logo.svg';
 import iconCartFullYellowDark from "../assets/icon-cart-full-yellow-dark.svg";
@@ -8,7 +9,11 @@ import iconMapFullPurple from "../assets/icon-map-full-purple-header.svg";
 export function Header() {
   return (
     <header className='flex justify-between content-center py-8'>
-      <Image src={coffeLogo} alt="Logo do Coffe Delivery" />
+      <div className='cursor-pointer'>
+        <Link href="/">
+          <Image src={coffeLogo} alt="Logo do Coffe Delivery" />
+        </Link>
+      </div>
 
       <div className='flex gap-3'>
 

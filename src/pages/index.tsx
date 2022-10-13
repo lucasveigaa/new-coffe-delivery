@@ -1,7 +1,3 @@
-import type { NextPage } from 'next';
-
-
-import { Header } from '../components/header';
 import { ItemCart } from '../components/ItemCart';
 
 import Image from 'next/image';
@@ -12,10 +8,11 @@ import iconCoffeWhiteBackPurple from "../assets/coffe-white-back-purple.svg";
 import iconPackingWhiteBackGray from "../assets/packing-white-back-gray.svg";
 import timerWhiteBackYellow from "../assets/timer-white-back-yellow.svg";
 
+import { Header } from '../components/Header';
 import { coffeItens } from '../services/products';
 
 
-const Home: NextPage = () => {
+const Home = () => {
 
   return (
     <div className='max-w-[1170px] mx-auto'>

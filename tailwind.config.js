@@ -35,6 +35,9 @@ module.exports = {
       },
       borderWidth: {
         '1': '1px'
+      },
+      backgroundImage: {
+        "border-gradient": "linear-gradient(102.89deg, #DBAC2C 2.61%, #8047F8 98.76%)"
       }
     },
   },

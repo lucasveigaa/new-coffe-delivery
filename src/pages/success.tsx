@@ -8,10 +8,10 @@ import illustrationPageSuccess from '../assets/illustration-page-success.svg';
 
 export default function Success() {
   return (
-    <div className='max-w-[1170px] mx-auto'>
+    <div className='max-w-[1170px] mx-auto px-3 lg:px-0'>
       <Header />
 
-      <div className="flex gap-24 mt-20">
+      <div className="flex flex-col lg:flex-row gap-24 mt-5 lg:mt-20">
         <div>
           <h1 className="font-baloo2 font-extrabold text-[32px] text-yellow-dark">
             Uhu! Pedido confirmado

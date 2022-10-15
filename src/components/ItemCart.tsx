@@ -20,7 +20,7 @@ export function ItemCart(product: Product) {
   const newValueProduct = valueProduct.toString().replace('.', ',')
 
   return (
-    <div className='flex flex-col items-center w-fit px-5 pb-5 bg-base-card rounded-tl-md rounded-br-md rounded-tr-[36px] rounded-bl-[36px]'>
+    <div className='flex flex-col items-center w-fit px-4 pb-5 bg-base-card rounded-tl-md rounded-br-md rounded-tr-[36px] rounded-bl-[36px]'>
       <div className='mt-[-21px] mb-3'>
         <Image src={imgProduct} alt="" />
       </div>
@@ -39,7 +39,7 @@ export function ItemCart(product: Product) {
         {descriptionProduct}
       </span>
 
-      <div className='flex mt-8'>
+      <div className='flex mt-8 w-[232px]'>
         <span className='text-sm text-base-text mr-6'>R$
           <strong className='font-baloo2 font-extrabold text-2xl'> {newValueProduct}0</strong>
         </span>

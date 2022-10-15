@@ -15,18 +15,20 @@ import { coffeItens } from '../services/products';
 const Home = () => {
 
   return (
-    <div className='max-w-[1170px] mx-auto'>
+    <div className='max-w-[1170px] mx-auto p-3 lg:p-0'>
       <Header />
 
-      <div className='flex mb-24'>
-        <div>
+      <div className='flex flex-col-reverse lg:flex-row mb-24'>
 
-          <h1 className='text-base-title text-5xl font-baloo2 font-extrabold leading-tight mb-4'>
-            Encontre o café perfeito para qualquer hora do dia
-          </h1>
-          <span className='text-base-subtitle text-xl leading-tight'>
-            Com o Coffee Delivery você recebe seu café onde estiver, a qualquer hora
-          </span>
+        <div>
+          <div>
+            <h1 className='text-base-title text-5xl font-baloo2 font-extrabold leading-tight mb-4'>
+              Encontre o café perfeito para qualquer hora do dia
+            </h1>
+            <span className='text-base-subtitle text-xl leading-tight'>
+              Com o Coffee Delivery você recebe seu café onde estiver, a qualquer hora
+            </span>
+          </div>
 
           <div className='mt-16 grid grid-cols-2 grid-rows-2 gap-5'>
             <div className='flex items-center gap-3'>
@@ -53,11 +55,11 @@ const Home = () => {
         <Image src={bannerCoffeHome} alt="" />
       </div>
 
-      <strong className='font-baloo2 text-base-subtitle font-extrabold text-[32px]'>
+      <strong className='flex justify-center lg:justify-start font-baloo2 text-base-subtitle font-extrabold text-[32px]'>
         Nossos cafés
       </strong>
 
-      <div className='mt-12 flex flex-wrap gap-8'>
+      <div className='mt-12 flex flex-wrap gap-8 justify-center lg:justify-start'>
         {coffeItens.map((product) => {
           return (
             <ItemCart {...product} key={product.idProduct} />

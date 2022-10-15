@@ -11,10 +11,10 @@ import { Header } from "../components/Header";
 
 export default function Checkout() {
   return (
-    <div className='max-w-[1170px] mx-auto'>
+    <div className='px-3 lg:px-0 max-w-[1170px] mx-auto'>
       <Header />
 
-      <form className="grid grid-cols-5 gap-8">
+      <form className="flex flex-col lg:grid lg:grid-cols-5 gap-8">
         <div className="col-span-3">
           <strong>Complete seu pedido</strong>
           <div className="flex flex-col p-10 rounded-md bg-base-card mt-4">
@@ -31,18 +31,21 @@ export default function Checkout() {
               <Input type='text' placeholder="Rua" />
               <div className="grid grid-cols-3 gap-3">
                 <Input type='number' placeholder="Número" />
-                <div className="col-span-2">
+                <div className="col-span-2 relative">
                   <Input type='text' placeholder="Complemento" />
+                  <span className="absolute text-xs text-base-label italic ml-[-65px] mt-[18px]">Opcional</span>
                 </div>
               </div>
-              <div className="grid grid-cols-9 gap-3">
+              <div className="grid grid-cols-10 md:grid-cols-9 gap-3">
                 <div className="col-span-3">
                   <Input type='text' placeholder="Bairro" />
                 </div>
                 <div className="col-span-5">
                   <Input type='text' placeholder="Cidade" />
                 </div>
-                <Input type='text' placeholder="UF" />
+                <div className="col-span-2 md:col-span-1">
+                  <Input type='text' placeholder="UF" />
+                </div>
               </div>
             </div>
 
@@ -57,7 +60,7 @@ export default function Checkout() {
               O pagamento é feito na entrega. Escolha a forma que deseja pagar
             </span>
 
-            <div className="flex gap-3 mt-8">
+            <div className="flex flex-col items-center md:flex-row gap-3 mt-8">
               <div>
                 <input name="payment-method" type="radio" id="credit-card" className="hidden peer" />
                 <label htmlFor="credit-card"

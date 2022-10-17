@@ -1,12 +1,19 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
+import { useContext } from 'react';
 
 import coffeLogo from '../assets/coffe-logo.svg';
 import iconCartFullYellowDark from "../assets/icon-cart-full-yellow-dark.svg";
 import iconMapFullPurple from "../assets/icon-map-full-purple-header.svg";
+import { CartContext } from '../contexts/CartContext';
 
 export function Header() {
+
+  const { cart } = useContext(CartContext)
+
+  const cartLength = cart.length
+
   return (
     <header className='flex justify-between content-center py-8'>
       <div className='cursor-pointer'>
@@ -22,10 +29,11 @@ export function Header() {
           <span className='items-center flex'>Minas Gerais, MG</span>
         </div>
 
-        <div className='cursor-pointer'>
+        <div className='cursor-pointer relative'>
           <Link href="/checkout">
             <Image src={iconCartFullYellowDark} alt="" />
           </Link>
+          <span className='absolute ml-[-8.35px] -mt-2 bg-yellow-dark text-white rounded-full w-6 h-6 text-center'>{cartLength}</span>
         </div>
 
       </div>

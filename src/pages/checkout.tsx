@@ -8,10 +8,11 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 
 import { useRouter } from 'next/router';
-import { Dispatch, SetStateAction } from "react";
-import expressoTradicional from '../assets/01-expresso-tradicional.svg';
+import { Dispatch, SetStateAction, useContext } from "react";
 import { Header } from "../components/Header";
-import { CheckoutType } from "../types";
+import { CartContext } from "../contexts/CartContext";
+import { CheckoutType, ProductWithAmount } from "../types";
+import { priceFormatter } from "../utils/formatter";
 
 const schema = yup.object({
   bairro: yup.string().required('Preencha o campo bairro'),
@@ -33,6 +34,8 @@ export default function Checkout({ setDataCheckout }: CheckoutProps) {
 
   const router = useRouter()
 
+  const { cart, changeAmountCart, removeProductCart } = useContext(CartContext)
+
   const { register, handleSubmit, formState: { errors } } = useForm({
     resolver: yupResolver(schema)
   })
@@ -40,6 +43,20 @@ export default function Checkout({ setDataCheckout }: CheckoutProps) {
   const onSubmit = (data: any) => {
     setDataCheckout(data)
     router.push('/success')
+  }
+
+  const cartTotalAmount = cart.reduce((acum, actualValue) =>
+    acum + actualValue.amountProduct * actualValue.valueProduct
+    , 0)
+
+  function handleIncreaseAmountItem(product: ProductWithAmount) {
+    const newProductAmount = { ...product, amountProduct: product.amountProduct + 1 }
+    changeAmountCart(newProductAmount)
+  }
+
+  function handleDecreaseAmountItem(product: ProductWithAmount) {
+    const newProductAmount = { ...product, amountProduct: product.amountProduct - 1 }
+    changeAmountCart(newProductAmount)
   }
 
   return (
@@ -141,52 +158,37 @@ export default function Checkout({ setDataCheckout }: CheckoutProps) {
           <strong>Cafés selecionados</strong>
           <div className="mt-4 flex flex-col p-10 pt-4 bg-base-card rounded-md rounded-tr-[44px] rounded-bl-[44px]">
 
-            <div className=" flex items-center pb-6 pt-6 border-b-1 border-base-button">
-              <Image width={64} height={64} src={expressoTradicional} alt="" />
-              <div className="ml-5 mr-10">
-                <span>Expresso Tradicional</span>
-                <div className="flex gap-2 mt-2">
-                  <div className='bg-base-button rounded-md p-2 flex items-center w-fit'>
-                    <button type='button'>{<Minus color='#8047F8' />}</button>
-                    <span className='text-base-title px-1'>1</span>
-                    <button type='button'>{<Plus color='#8047F8' />}</button>
-                  </div>
-                  <div className="flex items-center p-2 rounded-md gap-2 bg-base-button cursor-pointer hover:bg-base-hover">
-                    <Trash color='#8047F8' />
-                    <span className="text-xs text-base-text">
-                      REMOVER
-                    </span>
-                  </div>
-                </div>
-              </div>
-              <strong className="font-bold text-base-text mb-auto">R$ 9,90</strong>
-            </div>
 
-            <div className=" flex items-center pb-6 pt-6 border-b-1 border-base-button">
-              <Image width={64} height={64} src={expressoTradicional} alt="" />
-              <div className="ml-5 mr-10">
-                <span>Expresso Tradicional</span>
-                <div className="flex gap-2 mt-2">
-                  <div className='bg-base-button rounded-md p-2 flex items-center w-fit'>
-                    <button type='button'>{<Minus color='#8047F8' />}</button>
-                    <span className='text-base-title px-1'>1</span>
-                    <button type='button'>{<Plus color='#8047F8' />}</button>
+            {cart.map((item) => {
+              return (
+                <div key={item.idProduct} className=" flex items-center pb-6 pt-6 border-b-1 border-base-button">
+                  <Image width={64} height={64} src={item.imgProduct} alt="" />
+                  <div className="ml-5 mr-10">
+                    <span>{item.titleProduct}</span>
+                    <div className="flex gap-2 mt-2">
+                      <div className='bg-base-button rounded-md p-2 flex items-center w-fit'>
+                        <button onClick={() => handleDecreaseAmountItem(item)} type='button'>{<Minus color='#8047F8' />}</button>
+                        <span className='text-base-title px-1'>{item.amountProduct}</span>
+                        <button onClick={() => handleIncreaseAmountItem(item)} type='button'>{<Plus color='#8047F8' />}</button>
+                      </div>
+                      <div className="flex items-center p-2 rounded-md gap-2 bg-base-button cursor-pointer hover:bg-base-hover">
+                        <Trash color='#8047F8' />
+                        <span onClick={() => removeProductCart(item)} className="text-xs text-base-text">
+                          REMOVER
+                        </span>
+                      </div>
+                    </div>
                   </div>
-                  <div className="flex items-center p-2 rounded-md gap-2 bg-base-button cursor-pointer hover:bg-base-hover">
-                    <Trash color='#8047F8' />
-                    <span className="text-xs text-base-text">
-                      REMOVER
-                    </span>
-                  </div>
+                  <strong className="font-bold text-base-text mb-auto">{priceFormatter.format(item.valueProduct)}</strong>
                 </div>
-              </div>
-              <strong className="font-bold text-base-text mb-auto">R$ 9,90</strong>
-            </div>
+              )
+            })}
+
 
             <div className="mt-6 gap-3">
               <div className="flex justify-between">
                 <span className="text-sm text-base-text">Total de itens</span>
-                <span className="text-base-text">R$ 29,70</span>
+                <span className="text-base-text">{priceFormatter.format(cartTotalAmount)}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-sm text-base-text">Entrega</span>
@@ -194,7 +196,7 @@ export default function Checkout({ setDataCheckout }: CheckoutProps) {
               </div>
               <div className="flex justify-between">
                 <strong className="text-base-subtitle text-xl">Total</strong>
-                <strong className="text-base-subtitle text-xl">R$ 33,20</strong>
+                <strong className="text-base-subtitle text-xl">{priceFormatter.format(cartTotalAmount + 3.50)}</strong>
               </div>
             </div>
 

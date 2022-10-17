@@ -13,8 +13,6 @@ interface SuccessProps {
 
 export default function Success({ dataCheckout }: SuccessProps) {
 
-  console.log(dataCheckout)
-
   const paymentMethod = () => {
     if (dataCheckout.paymentMethod === 'cash') {
       return 'Dinheiro'

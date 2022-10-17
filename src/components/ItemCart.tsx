@@ -2,22 +2,40 @@ import Image from 'next/image';
 import cartWhiteBackPurpleDark from "../assets/cart-white-back-purple-dark.svg";
 
 import { Minus, Plus } from "phosphor-react";
-
-interface Product {
-  idProduct: number;
-  imgProduct: string;
-  typeProduct: string[];
-  titleProduct: string;
-  valueProduct: number;
-  descriptionProduct: string;
-}
+import { useContext, useState } from 'react';
+import { CartContext } from '../contexts/CartContext';
+import { Product, ProductWithAmount } from '../types';
 
 export function ItemCart(product: Product) {
-
-
   const { descriptionProduct, imgProduct, titleProduct, typeProduct, valueProduct } = product
+  const { addToCart, cart } = useContext(CartContext)
+  const [amountProduct, setAmountProduct] = useState(thisProductIsOnCart)
+
+  function thisProductIsOnCart() {
+    const findProductOnCart = cart.find((item) => item.idProduct === product.idProduct)
+    if (findProductOnCart?.amountProduct !== undefined) {
+      return findProductOnCart?.amountProduct
+    }
+    return 0
+  }
+
+
+
 
   const newValueProduct = valueProduct.toString().replace('.', ',')
+
+
+  function increaseAmountProduct() {
+    setAmountProduct(amountProduct + 1)
+  }
+
+  function decreaseAmountProduct() {
+    if (amountProduct > 0) {
+      setAmountProduct(amountProduct - 1)
+    }
+  }
+
+  const thisProductWithAmount: ProductWithAmount = { ...product, amountProduct: amountProduct }
 
   return (
     <div className='flex flex-col items-center w-fit px-4 pb-5 bg-base-card rounded-tl-md rounded-br-md rounded-tr-[36px] rounded-bl-[36px]'>
@@ -44,14 +62,14 @@ export function ItemCart(product: Product) {
           <strong className='font-baloo2 font-extrabold text-2xl'> {newValueProduct}0</strong>
         </span>
         <div className='bg-base-button rounded-md p-2 mr-2 flex items-center'>
-          <button type='button'>{<Minus color='#8047F8' />}</button>
-          <span className='text-base-title px-1'>1</span>
-          <button type='button'>{<Plus color='#8047F8' />}</button>
+          <button onClick={decreaseAmountProduct} type='button'>{<Minus color='#8047F8' />}</button>
+          <span className='text-base-title px-1'>{amountProduct}</span>
+          <button onClick={increaseAmountProduct} type='button'>{<Plus color='#8047F8' />}</button>
         </div>
-        <div className='cursor-pointer'>
+        <div onClick={() => addToCart(thisProductWithAmount)} className='cursor-pointer'>
           <Image src={cartWhiteBackPurpleDark} alt="" />
         </div>
       </div>
-    </div>
+    </div >
   )
 }

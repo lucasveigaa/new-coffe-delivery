@@ -14,6 +14,7 @@ import { coffeItens } from '../services/products';
 
 const Home = () => {
 
+
   return (
     <div className='max-w-[1170px] mx-auto p-3 lg:p-0'>
       <Header />

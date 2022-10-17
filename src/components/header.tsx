@@ -22,7 +22,11 @@ export function Header() {
           <span className='items-center flex'>Minas Gerais, MG</span>
         </div>
 
-        <Image src={iconCartFullYellowDark} alt="" />
+        <div className='cursor-pointer'>
+          <Link href="/checkout">
+            <Image src={iconCartFullYellowDark} alt="" />
+          </Link>
+        </div>
 
       </div>
     </header>

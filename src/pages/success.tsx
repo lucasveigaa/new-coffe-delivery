@@ -5,8 +5,27 @@ import iconCashYellowDark from '../assets/icon-cash-full-yellow-dark.svg';
 import iconMapPinPurple from '../assets/icon-map-pin-full-purple.svg';
 import iconTimerFullYellow from '../assets/icon-timer-full-yellow.svg';
 import illustrationPageSuccess from '../assets/illustration-page-success.svg';
+import { CheckoutType } from "../types";
 
-export default function Success() {
+interface SuccessProps {
+  dataCheckout: CheckoutType;
+}
+
+export default function Success({ dataCheckout }: SuccessProps) {
+
+  console.log(dataCheckout)
+
+  const paymentMethod = () => {
+    if (dataCheckout.paymentMethod === 'cash') {
+      return 'Dinheiro'
+    }
+    if (dataCheckout.paymentMethod === 'debit-card') {
+      return 'Cartão de débito'
+    }
+
+    return 'Cartão de crédito'
+  }
+
   return (
     <div className='max-w-[1170px] mx-auto px-3 lg:px-0'>
       <Header />
@@ -23,8 +42,8 @@ export default function Success() {
             <div className="flex gap-3">
               <Image alt="" src={iconMapPinPurple} />
               <div className="flex flex-col">
-                <span>Entrega em <strong>Rua João Daniel Martinelli, 102</strong></span>
-                <span>Farrapos - Porto Alegre, RS</span>
+                <span>Entrega em <strong>{dataCheckout.rua}, {dataCheckout.numero}</strong></span>
+                <span>{dataCheckout.cidade} - {dataCheckout.UF}</span>
               </div>
             </div>
             <div className="flex gap-3 mt-8">
@@ -38,7 +57,7 @@ export default function Success() {
               <Image alt="" src={iconCashYellowDark} />
               <div className="flex flex-col">
                 <span>Pagamento na entrega</span>
-                <strong>Cartão de Crédito</strong>
+                <strong>{paymentMethod()}</strong>
               </div>
             </div>
           </div>

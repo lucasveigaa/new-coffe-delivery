@@ -1,20 +1,52 @@
-
-
 import Image from "next/image";
 import { Bank, CreditCard, CurrencyDollar, MapPin, Minus, Money, Plus, Trash } from 'phosphor-react';
 import { Input } from "../components/Input";
 
 
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm } from "react-hook-form";
+import * as yup from "yup";
+
+import { useRouter } from 'next/router';
+import { Dispatch, SetStateAction } from "react";
 import expressoTradicional from '../assets/01-expresso-tradicional.svg';
 import { Header } from "../components/Header";
+import { CheckoutType } from "../types";
+
+const schema = yup.object({
+  bairro: yup.string().required('Preencha o campo bairro'),
+  CEP: yup.string().min(8, 'CEP deve ter 8 caracteres').max(8, 'CEP deve ter 8 caracteres').required('Preencha o campo CEP'),
+  cidade: yup.string().required('Preencha o campo cidade'),
+  complemento: yup.string(),
+  numero: yup.string().required('Preencha o campo número'),
+  rua: yup.string().required('Preencha o campo rua'),
+  UF: yup.string().min(2, 'UF deve ter 2 caracteres').max(2, 'UF deve ter 2 caracteres').required('Preencha o campo UF'),
+  paymentMethod: yup.string().required()
+})
+
+interface CheckoutProps {
+  setDataCheckout: Dispatch<SetStateAction<CheckoutType>>;
+}
 
 
-export default function Checkout() {
+export default function Checkout({ setDataCheckout }: CheckoutProps) {
+
+  const router = useRouter()
+
+  const { register, handleSubmit, formState: { errors } } = useForm({
+    resolver: yupResolver(schema)
+  })
+
+  const onSubmit = (data: any) => {
+    setDataCheckout(data)
+    router.push('/success')
+  }
+
   return (
     <div className='px-3 lg:px-0 max-w-[1170px] mx-auto'>
       <Header />
 
-      <form className="flex flex-col lg:grid lg:grid-cols-5 gap-8">
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col lg:grid lg:grid-cols-5 gap-8">
         <div className="col-span-3">
           <strong>Complete seu pedido</strong>
           <div className="flex flex-col p-10 rounded-md bg-base-card mt-4">
@@ -26,27 +58,37 @@ export default function Checkout() {
 
             <div className="flex gap-4 flex-col mt-8">
               <div className="grid grid-cols-3">
-                <Input type='number' placeholder="CEP" />
+                <Input register={register} registerName="CEP" type='number' placeholder="CEP" />
               </div>
-              <Input type='text' placeholder="Rua" />
+              <p>{typeof (errors.CEP?.message) === 'string' && errors.CEP?.message}</p>
+
+              <Input register={register} registerName="rua" type='text' placeholder="Rua" />
+              <p>{typeof (errors.rua?.message) === 'string' && errors.rua?.message}</p>
               <div className="grid grid-cols-3 gap-3">
-                <Input type='number' placeholder="Número" />
+                <Input register={register} registerName="numero" type='number' placeholder="Número" />
                 <div className="col-span-2 relative">
-                  <Input type='text' placeholder="Complemento" />
+                  <Input register={register} registerName="complemento" type='text' placeholder="Complemento" />
                   <span className="absolute text-xs text-base-label italic ml-[-65px] mt-[18px]">Opcional</span>
                 </div>
               </div>
+              <p>{typeof (errors.numero?.message) === 'string' && errors.numero?.message}</p>
               <div className="grid grid-cols-10 md:grid-cols-9 gap-3">
                 <div className="col-span-3">
-                  <Input type='text' placeholder="Bairro" />
+                  <Input register={register} registerName="bairro" type='text' placeholder="Bairro" />
                 </div>
                 <div className="col-span-5">
-                  <Input type='text' placeholder="Cidade" />
+                  <Input register={register} registerName="cidade" type='text' placeholder="Cidade" />
                 </div>
                 <div className="col-span-2 md:col-span-1">
-                  <Input type='text' placeholder="UF" />
+                  <Input register={register} registerName="UF" type='text' placeholder="UF" />
                 </div>
               </div>
+              <div className="flex gap-3">
+                <p>{typeof (errors.bairro?.message) === 'string' && errors.bairro?.message}</p>
+                <p>{typeof (errors.cidade?.message) === 'string' && errors.cidade?.message}</p>
+                <p>{typeof (errors.UF?.message) === 'string' && errors.UF?.message}</p>
+              </div>
+
             </div>
 
           </div>
@@ -62,7 +104,7 @@ export default function Checkout() {
 
             <div className="flex flex-col items-center md:flex-row gap-3 mt-8">
               <div>
-                <input name="payment-method" type="radio" id="credit-card" className="hidden peer" />
+                <input {...register('paymentMethod')} value="credit-card" name="paymentMethod" type="radio" id="credit-card" className="hidden peer" />
                 <label htmlFor="credit-card"
                   className="flex items-center gap-3 text-base-text text-xs p-4 bg-base-button rounded-md w-44 cursor-pointer hover:bg-base-hover peer-checked:border-1 peer-checked:border-purple"
                 >
@@ -72,7 +114,7 @@ export default function Checkout() {
               </div>
 
               <div>
-                <input name="payment-method" type="radio" id="debit-card" className="hidden peer" />
+                <input {...register('paymentMethod')} value="debit-card" name="paymentMethod" type="radio" id="debit-card" className="hidden peer" />
                 <label htmlFor="debit-card"
                   className="flex items-center gap-3 text-base-text text-xs p-4 bg-base-button rounded-md w-44 cursor-pointer hover:bg-base-hover peer-checked:border-1 peer-checked:border-purple"
                 >
@@ -81,8 +123,8 @@ export default function Checkout() {
                 </label>
               </div>
 
-              <div className="">
-                <input name="payment-method" type="radio" id="cash" className="hidden peer" />
+              <div>
+                <input {...register('paymentMethod')} value="cash" name="paymentMethod" type="radio" id="cash" className="hidden peer" />
                 <label htmlFor="cash"
                   className="flex items-center gap-3 text-base-text text-xs p-4 bg-base-button rounded-md w-44 cursor-pointer hover:bg-base-hover peer-checked:border-1 peer-checked:border-purple"
                 >
@@ -91,6 +133,7 @@ export default function Checkout() {
                 </label>
               </div>
             </div>
+            <p>{typeof (errors.paymentMethod?.message) === 'string' && 'Selecione uma forma de pagamento'}</p>
 
           </div>
         </div>
